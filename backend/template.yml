@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  AllowedOrigins:
+    Type: CommaDelimitedList
+    Default: "http://localhost:5173,https://localhost"
+    Description: Web and Capacitor origins (http/https only; Lambda URL CORS rejects custom schemes). Include the production web URL when deploying.
+  GoogleWebClientId:
+    Type: String
+    Default: ''
+    Description: Google OAuth Web Client ID (ID 토큰 aud 검증용)
+
+Globals:
+  Function:
+    Runtime: python3.13
+    Timeout: 60
+    MemorySize: 1024
+    Architectures:
+      - arm64
+
+Resources:
+  LambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Ref AWS::StackName
+      Handler: main.lambda_handler
+      CodeUri: .
+      Environment:
+        Variables:
+          TZ: Asia/Seoul
+          DSQL_ENDPOINT: !GetAtt DsqlCluster.Endpoint
+          GOOGLE_WEB_CLIENT_ID: !Ref GoogleWebClientId
+          JWT_SECRET_PARAM: !Sub '/${AWS::StackName}/JWT_SECRET'
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action: ssm:GetParameter
+              Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${AWS::StackName}/JWT_SECRET'
+            - Effect: Allow
+              Action: kms:Decrypt
+              Resource: '*'
+              Condition:
+                StringEquals:
+                  kms:ViaService: !Sub 'ssm.${AWS::Region}.amazonaws.com'
+            - Effect: Allow
+              Action: dsql:DbConnectAdmin
+              Resource: !GetAtt DsqlCluster.ResourceArn
+
+      FunctionUrlConfig:
+        AuthType: NONE
+        Cors:
+          AllowOrigins: !Ref AllowedOrigins
+          AllowMethods: ['*']
+          AllowHeaders: ['*']
+
+  DsqlCluster:
+    Type: AWS::DSQL::Cluster
+    Properties:
+      DeletionProtectionEnabled: false
+
+
+Outputs:
+  FunctionUrl:
+    Description: Lambda Function URL
+    Value: !GetAtt LambdaFunctionUrl.FunctionUrl
+  DsqlClusterIdentifier:
+    Description: Aurora DSQL cluster identifier
+    Value: !GetAtt DsqlCluster.Identifier
+  DsqlEndpoint:
+    Description: Aurora DSQL cluster endpoint
+    Value: !GetAtt DsqlCluster.Endpoint

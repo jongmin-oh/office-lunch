@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "mobile-ui-design-system": {
+      "type": "http",
+      "url": "https://material-design-system-mcp.mds-mcp.workers.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MCP_ACCESS_TOKEN}"
+      }
+    },
+    "aws-docs": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-documentation-mcp-server@latest"
+      ],
+      "env": {}
+    },
+    "aws-api": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-api-mcp-server@latest"
+      ],
+      "env": {
+        "AWS_REGION": "ap-northeast-2",
+        "READ_OPERATIONS_ONLY": "true"
+      }
+    }
+  }
+}
