@@ -4,8 +4,8 @@ Transform: AWS::Serverless-2016-10-31
 Parameters:
   AllowedOrigins:
     Type: CommaDelimitedList
-    Default: "http://localhost:5173,https://localhost"
-    Description: Web and Capacitor origins (http/https only; Lambda URL CORS rejects custom schemes). Include the production web URL when deploying.
+    Default: "http://localhost:5173"
+    Description: Web origins allowed by Function URL CORS. Include the production web URL when hosting outside the Function URL.
   GoogleWebClientId:
     Type: String
     Default: ''

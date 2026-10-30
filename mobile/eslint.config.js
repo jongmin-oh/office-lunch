@@ -42,7 +42,7 @@ const restrict = (...patterns) => ({
 });
 
 export default tseslint.config(
-  { ignores: ["dist/**", "ios/**", "android/**", "src/lib/schema.d.ts"] },
+  { ignores: ["dist/**", "src/lib/schema.d.ts"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },

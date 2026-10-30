@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">점심 뭐먹Gen</string>
-    <string name="title_activity_main">점심 뭐먹Gen</string>
-    <string name="package_name">ai.genon.officelunch</string>
-    <string name="custom_url_scheme">ai.genon.officelunch</string>
-</resources>

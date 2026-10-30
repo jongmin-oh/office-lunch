@@ -5,8 +5,6 @@ function initialize() {
   initialization ??= SocialLogin.initialize({
     google: {
       webClientId: import.meta.env.VITE_GOOGLE_WEB_CLIENT_ID,
-      iOSClientId: import.meta.env.VITE_GOOGLE_IOS_CLIENT_ID,
-      iOSServerClientId: import.meta.env.VITE_GOOGLE_WEB_CLIENT_ID,
       mode: "online",
     },
   });

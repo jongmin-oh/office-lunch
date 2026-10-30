@@ -5,10 +5,10 @@
 
 ## 스택
 
-- **프론트엔드**: React SPA + TypeScript strict + Vite 8 → 웹 / Capacitor 8 (iOS·Android)
+- **프론트엔드**: React SPA + TypeScript strict + Vite 8 → 웹 (네이티브 앱 없음)
 - **라우팅·상태·스타일**: React Router 7 (`react-router`), TanStack Query 5, Zustand 5, Tailwind CSS 4
 - **UI**: `mobile-ui-design-system` MCP(`get_design_spec` → `get_component` → `get_icon` → `get_design_tokens` → `get_design_system`)의 HTML + Tailwind CSS v4 + `--ds-*` 토큰(기본 강조색 `#7c4dff`, 라이트·다크·시스템 테마), `THIRD_PARTY_NOTICES.txt` 함께 배포
-- **개발 환경**: Node.js 22.12+, iOS 빌드는 macOS + Xcode 26+. 상세: `docs/frontend-stack.md`
+- **개발 환경**: Node.js 22.12+. 상세: `docs/frontend-stack.md`
 - **백엔드**: FastAPI (Python 3.13) → AWS Lambda (Mangum 어댑터) + Lambda Function URL
 - **DB 접근·스키마**: SQLAlchemy 2.0 ORM, Alembic 마이그레이션 (DSQL은 `aurora-dsql-sqlalchemy` 방언)
 - **인프라**: AWS SAM
@@ -17,9 +17,9 @@
 ## 폴더 구조
 
 ```
-mobile/          # React SPA + Capacitor 앱
+mobile/          # React 웹 SPA
   src/
-    app/         # App.tsx(라우터·Layout), NativeLifecycle
+    app/         # App.tsx(라우터·Layout)
     features/    # 기능별 폴더. <name>/ 안에 index.ts, api.ts, use*.ts, *.tsx
       auth/      # AuthProvider, useAuth, SignIn, Google 로그인
       account/   # 내 정보 화면
@@ -30,9 +30,6 @@ mobile/          # React SPA + Capacitor 앱
   public/
     THIRD_PARTY_NOTICES.txt # MCP 라이선스 고지문 (빌드 시 dist/에 포함)
   __tests__/     # Vitest + React Testing Library
-  capacitor.config.ts # appId, webDir: dist, 네이티브 플러그인 설정
-  ios/          # Capacitor iOS 프로젝트 (SPM)
-  android/      # Capacitor Android 프로젝트
 backend/         # FastAPI
   app/
     deps.py      # SessionDep (DB 세션), CurrentUser (인증 의존성)
@@ -121,9 +118,7 @@ cd mobile && npm ci                               # 잠금 버전 설치
 cd mobile && npm run dev                          # 브라우저 개발
 cd mobile && npm test                             # Vitest + React Testing Library
 cd mobile && npm run typecheck && npm run lint     # 타입체크/린트
-cd mobile && npm run sync                         # 빌드 + cap sync
-cd mobile && npm run ios                          # Xcode (Mac 필수)
-cd mobile && npm run android                      # Android Studio
+cd mobile && npm run build                        # 웹 빌드 (dist/)
 ```
 
 ## Git

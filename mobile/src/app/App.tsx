@@ -1,5 +1,4 @@
 import { NavLink, Navigate, Outlet, Route, Routes } from "react-router";
-import { NativeLifecycle } from "@/app/NativeLifecycle";
 import { MyScreen } from "@/features/account";
 import { AuthProvider, SignIn, useAuth } from "@/features/auth";
 import { TodoScreen } from "@/features/todos";
@@ -115,7 +114,6 @@ function AppRoutes() {
 export function App() {
   return (
     <AuthProvider>
-      <NativeLifecycle />
       <AppRoutes />
     </AuthProvider>
   );
