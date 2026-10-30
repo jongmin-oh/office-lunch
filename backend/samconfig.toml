@@ -1,9 +1,9 @@
 version = 0.1
 
 [default.deploy.parameters]
-stack_name = "backend-template"
+stack_name = "office-lunch"
 resolve_s3 = true
-s3_prefix = "backend-template"
+s3_prefix = "office-lunch"
 region = "ap-northeast-2"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"

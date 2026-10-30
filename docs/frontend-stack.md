@@ -82,9 +82,9 @@ npx cap add android
 ## Google 로그인과 API
 
 - `.env.local`의 `VITE_API_URL`에 백엔드 URL, `VITE_GOOGLE_WEB_CLIENT_ID`와 `VITE_GOOGLE_IOS_CLIENT_ID`에 해당 OAuth 클라이언트 ID를 설정합니다. `VITE_*`는 번들에 노출되므로 비밀값을 넣지 않습니다.
-- Google Cloud에서 웹 출처(개발은 `http://localhost:5173`, 운영은 실제 웹 URL)를 등록합니다. 웹 클라이언트의 승인된 리디렉션 URI에는 `http://localhost:5173/sign-in`과 운영 웹의 `/sign-in` URL도 등록합니다. Android OAuth 클라이언트에는 `com.reppley.template`과 개발·배포 서명의 SHA-1을 등록합니다.
+- Google Cloud에서 웹 출처(개발은 `http://localhost:5173`, 운영은 실제 웹 URL)를 등록합니다. 웹 클라이언트의 승인된 리디렉션 URI에는 `http://localhost:5173/sign-in`과 운영 웹의 `/sign-in` URL도 등록합니다. Android OAuth 클라이언트에는 `ai.genon.officelunch`과 개발·배포 서명의 SHA-1을 등록합니다.
 - 네이티브 Google 콜백은 Android `MainActivity`와 iOS `AppDelegate`/`SceneDelegate`에 연결되어 있습니다.
-- iOS OAuth 클라이언트의 번들 ID는 `com.reppley.template`입니다. `Info.plist`의 URL scheme을 해당 클라이언트 ID의 역순 값으로 맞춥니다.
+- iOS OAuth 클라이언트의 번들 ID는 `ai.genon.officelunch`입니다. `Info.plist`의 URL scheme을 해당 클라이언트 ID의 역순 값으로 맞춥니다.
 - `src/features/auth/google.ts`는 online 모드의 Google ID token을 받아 기존 `POST /auth/google` 계약으로 전달합니다. iOS server client ID와 백엔드 `GOOGLE_WEB_CLIENT_ID`도 같은 Web client ID를 사용합니다.
 - JWT로 `GET /me`를 호출해 세션을 복원합니다. 거절된 토큰은 지우고 로그인 화면으로 돌아갑니다. 로그아웃은 토큰·Google 세션·Query 캐시를 비웁니다.
 - 네이티브 토큰은 보안 저장소를 사용합니다. 웹은 **암호화되지 않은 sessionStorage**를 사용하며 탭이 닫히면 세션이 종료됩니다. HttpOnly 쿠키 방식으로 바꾸려면 백엔드 계약 변경이 필요합니다.

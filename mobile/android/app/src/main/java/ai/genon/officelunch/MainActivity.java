@@ -1,4 +1,4 @@
-package com.reppley.template;
+package ai.genon.officelunch;
 
 import android.content.Intent;
 import android.os.Bundle;

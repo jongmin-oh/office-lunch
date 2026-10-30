@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "com.reppley.template",
-  appName: "mobile",
+  appId: "ai.genon.officelunch",
+  appName: "점심 뭐먹Gen",
   webDir: "dist",
   plugins: {
     // Native fetch bypasses CORS; Lambda Function URL CORS rejects capacitor://localhost
